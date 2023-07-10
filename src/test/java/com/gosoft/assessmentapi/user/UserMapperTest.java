@@ -19,5 +19,6 @@ public class UserMapperTest {
 
         assertThat(userLoginResponse).isNotNull();
         assertThat(userLoginResponse.email()).isEqualTo("kuankeehan@gosoft.co.th");
+        assertThat(userLoginResponse.token()).isNull();
     }
 }

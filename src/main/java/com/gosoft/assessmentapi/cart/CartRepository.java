@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface CartRepository extends CrudRepository<Cart, UUID> { }
+public interface CartRepository extends CrudRepository<Cart, UUID> {
+    Iterable<Cart> findAllByUserId(UUID userId);
+}

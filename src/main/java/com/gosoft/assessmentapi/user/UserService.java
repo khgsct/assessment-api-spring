@@ -1,19 +1,31 @@
 package com.gosoft.assessmentapi.user;
 
+import com.gosoft.assessmentapi.auth.JwtService;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 public class UserService {
 
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
     private final UserRepository userRepository;
+    private final UserPasswordService userPasswordService;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(AuthenticationManager authenticationManager, JwtService jwtService, UserRepository userRepository, UserPasswordService userPasswordService) {
+        this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
         this.userRepository = userRepository;
+        this.userPasswordService = userPasswordService;
     }
 
-    public User authenticate(UserLoginRequest loginRequest) {
-        return null;
+    public String authenticate(String username, String password) {
+        var user = userRepository.findOptionalByEmail(username)
+                .orElseThrow();
+        if (!this.userPasswordService.matches(password, user.getPassword())) {
+            throw new IllegalArgumentException("invalid credential");
+        }
+        var token = this.jwtService.generateToken(user.getUsername());
+        return token;
     }
 }

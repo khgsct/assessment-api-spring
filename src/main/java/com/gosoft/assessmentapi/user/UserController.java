@@ -18,8 +18,8 @@ public class UserController {
     }
 
     @PostMapping(path = "/authenticate")
-    public ResponseEntity<?> authenticate(@RequestBody UserLoginRequest loginRequest) {
-        var response = this.userService.authenticate(loginRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public ResponseEntity<UserLoginResponse> authenticate(@RequestBody UserLoginRequest loginRequest) {
+        var token = this.userService.authenticate(loginRequest.email(), loginRequest.password());
+        return ResponseEntity.status(HttpStatus.CREATED).body(new UserLoginResponse(loginRequest.email(), token));
     }
 }

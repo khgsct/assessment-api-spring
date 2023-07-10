@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/products")
-public class ProductController {
+public class    ProductController {
 
     private final ProductService productService;
 
@@ -19,15 +19,15 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping(path = "/")
+    @GetMapping(path = "")
     public ResponseEntity<List<ProductResponse>> getProducts() {
-        var response = this.productService.getProducts();
+        var products = this.productService.getProducts();
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<ProductResponse> getProduct(@PathVariable Long id) {
-
+        var product = this.productService.getProduct();
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 }
