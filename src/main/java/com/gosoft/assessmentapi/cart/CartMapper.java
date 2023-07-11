@@ -1,7 +1,7 @@
 package com.gosoft.assessmentapi.cart;
 
-import com.gosoft.assessmentapi.user.UserLoginMapper;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
@@ -16,5 +16,10 @@ public interface CartMapper {
 
     CartMapper MAPPER = Mappers.getMapper(CartMapper.class);
 
+    @Mapping(source = "product.name", target = "productName")
+    @Mapping(source = "product.price", target = "productPrice")
+    CartResponse toResponse(Cart userCart);
+
     List<CartResponse> toResponse(Iterable<Cart> userCart);
+    CartSummaryResponse toResponse(CartSummary userCart);
 }

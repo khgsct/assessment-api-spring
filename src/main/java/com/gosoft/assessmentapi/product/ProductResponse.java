@@ -1,3 +1,5 @@
 package com.gosoft.assessmentapi.product;
 
-public record ProductResponse (Long id, String name, double price) { }
+import java.util.UUID;
+
+public record ProductResponse (UUID id, String name, double price) { }

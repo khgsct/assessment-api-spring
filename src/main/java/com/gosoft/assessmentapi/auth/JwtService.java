@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 @Component
 public class JwtService {
-    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+    private static final long tokenValidity = 900_000;
 
     @Value("${auth.jwt.secret}")
     private String secret;
@@ -21,7 +21,7 @@ public class JwtService {
                 .setClaims(new HashMap<>())
                 .setSubject(plainText)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + tokenValidity))
                 .signWith(SignatureAlgorithm.HS512, getSigningKey())
                 .compact();
     }

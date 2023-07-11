@@ -15,15 +15,22 @@ public class ProductItemProcessor implements ItemProcessor<ProductBatchItem, Pro
 
     @Override
     public Product process(ProductBatchItem item) throws Exception {
-        var product = new Product();
-        product.setId(UUID.randomUUID());
-        product.setName(item.getName());
-        product.setPrice(item.getPrice());
-        product.setCreatedAt(LocalDateTime.now());
-        product.setUpdatedAt(LocalDateTime.now());
+        try {
+            var product = new Product();
+            product.setId(UUID.randomUUID());
+            product.setName(item.getName());
+            product.setPrice(item.getPrice());
+            product.setCreatedAt(LocalDateTime.now());
+            product.setUpdatedAt(LocalDateTime.now());
+            product.setCreatedBy("batch-processing");
+            product.setUpdatedBy("batch-processing");
 
-        log.info("Converting : " + item.getName());
-
-        return product;
+            log.info("Converting : " + item.getName());
+            return product;
+        }
+        catch (Exception e) {
+            log.error(e.getMessage());
+            throw e;
+        }
     }
 }

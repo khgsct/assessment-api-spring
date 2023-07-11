@@ -11,5 +11,6 @@ import org.mapstruct.factory.Mappers;
 )
 public interface UserLoginMapper {
     UserLoginMapper MAPPER = Mappers.getMapper(UserLoginMapper.class);
-    UserLoginResponse toResponse(User user);
+
+    UserResponse toResponse(User user);
 }

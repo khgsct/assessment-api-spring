@@ -4,6 +4,8 @@ import com.gosoft.assessmentapi.auth.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.CredentialException;
+
 @Service
 public class UserService {
 
@@ -19,11 +21,11 @@ public class UserService {
         this.userPasswordService = userPasswordService;
     }
 
-    public String authenticate(String username, String password) {
+    public String authenticate(String username, String password) throws CredentialException {
         var user = userRepository.findOptionalByEmail(username)
-                .orElseThrow();
+                .orElseThrow(CredentialException::new);
         if (!this.userPasswordService.matches(password, user.getPassword())) {
-            throw new IllegalArgumentException("invalid credential");
+            throw new CredentialException();
         }
         var token = this.jwtService.generateToken(user.getUsername());
         return token;

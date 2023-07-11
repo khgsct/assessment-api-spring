@@ -54,7 +54,7 @@ public class ProductBatchConfiguration {
     public JdbcBatchItemWriter<Product> writer(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<Product>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-                .sql("INSERT INTO products (id, name, price, created_at, updated_at) VALUES (:id, :name, :price, :createdAt, :updatedAt)")
+                .sql("INSERT INTO products (id, name, price, created_at, updated_at, created_by, updated_by) VALUES (:id, :name, :price, :createdAt, :updatedAt, :createdBy, :updatedBy)")
                 .dataSource(dataSource)
                 .build();
     }
@@ -88,7 +88,9 @@ public class ProductBatchConfiguration {
 
     private void clearProducts() {
         this.jdbcTemplate
-                .update("DELETE FROM products where name in ('product-1','product-2','product-3')");
+                .update("DELETE FROM carts");
+        this.jdbcTemplate
+                .update("DELETE FROM products where created_by = 'batch-processing'");
         log.info("Clean up products complete");
     }
 

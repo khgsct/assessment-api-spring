@@ -15,7 +15,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "CARTS")
 public class Cart {
@@ -34,4 +33,8 @@ public class Cart {
     private LocalDateTime createdAt;
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+    private double totalPrice;
+    public double getTotalPrice() {
+        return this.quantity * this.getProduct().getPrice();
+    }
 }

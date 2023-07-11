@@ -15,7 +15,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "PRODUCTS")
 public class Product {
@@ -30,4 +29,8 @@ public class Product {
     private LocalDateTime createdAt;
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+    @Column(nullable = false)
+    private String createdBy;
+    @Column(nullable = false)
+    private String updatedBy;
 }

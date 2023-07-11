@@ -15,10 +15,11 @@ public class UserMapperTest {
         user.setEmail("kuankeehan@gosoft.co.th");
         user.setPassword("1234");
 
-        UserLoginResponse userLoginResponse = UserLoginMapper.MAPPER.toResponse(user);
+        var mapperResponse = UserLoginMapper.MAPPER.toResponse(user);
 
-        assertThat(userLoginResponse).isNotNull();
-        assertThat(userLoginResponse.email()).isEqualTo("kuankeehan@gosoft.co.th");
-        assertThat(userLoginResponse.token()).isNull();
+        assertThat(mapperResponse).isNotNull();
+        assertThat(mapperResponse.email()).isEqualTo(user.getEmail());
+        assertThat(mapperResponse.createdAt()).isEqualTo(user.getCreatedAt());
+        assertThat(mapperResponse.updatedAt()).isEqualTo(user.getUpdatedAt());
     }
 }

@@ -2,7 +2,7 @@ package com.gosoft.assessmentapi.cart;
 
 import com.gosoft.assessmentapi.product.ProductNotFoundException;
 import com.gosoft.assessmentapi.product.ProductRepository;
-import com.gosoft.assessmentapi.user.UserNotFoundException;
+import com.gosoft.assessmentapi.user.User;
 import com.gosoft.assessmentapi.user.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,22 +22,31 @@ public class CartService {
         this.userRepository = userRepository;
     }
 
-    public void updateCart(UUID userId, UUID productId, int quantity) {
-        var user = this.userRepository.findById(userId)
-                .orElseThrow(UserNotFoundException::new);
-        var product = this.productRepository.findById(productId)
-                .orElseThrow(ProductNotFoundException::new);
+    public void updateCart(User customer, UUID productId, int quantity) {
+        var cartFromDb = this.cartRepository
+                .findOptionalByProductIdAndUserId(productId, customer.getId());
 
-        var cart = new Cart();
-        cart.setUser(user);
-        cart.setProduct(product);
-        cart.setQuantity(quantity);
-        cart.setCreatedAt(LocalDateTime.now());
-        cart.setUpdatedAt(LocalDateTime.now());
+        var cartInstance = cartFromDb.isPresent() ? cartFromDb.get() : new Cart();
+        cartInstance.setQuantity(quantity);
+        cartInstance.setUpdatedAt(LocalDateTime.now());
+
+        if (!cartFromDb.isPresent()) {
+            var product = this.productRepository.findById(productId)
+                    .orElseThrow(ProductNotFoundException::new);
+            cartInstance.setUser(customer);
+            cartInstance.setProduct(product);
+            cartInstance.setCreatedAt(LocalDateTime.now());
+        }
+
+        this.cartRepository.save(cartInstance);
     }
 
-    public Iterable<Cart> getUserCart(UUID userId) {
-        var cart = this.cartRepository.findAllByUserId(userId);
-        return cart;
+    public CartSummary getCartSummary(UUID userId) {
+        var cartDetails = this.cartRepository.findAllByUserId(userId);
+        var cartSummary = CartSummary
+                .builder()
+                .cartDetails(cartDetails)
+                .build();
+        return cartSummary;
     }
 }

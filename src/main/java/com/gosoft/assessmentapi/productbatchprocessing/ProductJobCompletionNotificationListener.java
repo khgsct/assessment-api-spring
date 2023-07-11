@@ -20,12 +20,12 @@ public class ProductJobCompletionNotificationListener implements JobExecutionLis
 
     @Override
     public void afterJob(JobExecution jobExecution) {
-        this.jdbcTemplate.query("SELECT name, price FROM products", (rs, row) -> {
+        this.jdbcTemplate.query("SELECT name FROM products", (rs, row) -> {
             var product = new Product();
             product.setName(rs.getString("name"));
-            product.setPrice(rs.getDouble("price"));
             return product;
         })
-        .forEach(product -> log.info("Job complete : Found <{{}}>", product));
+        .forEach(product ->
+                log.info("Job complete : Found " + product.getName()));
     }
 }

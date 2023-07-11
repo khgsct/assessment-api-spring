@@ -1,16 +1,14 @@
 package com.gosoft.assessmentapi.cart;
 
-import com.gosoft.assessmentapi.user.User;
+import com.gosoft.assessmentapi.global.SecurityController;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/carts")
-public class CartController {
+public class CartController extends SecurityController {
 
     private final CartService cartService;
 
@@ -19,20 +17,16 @@ public class CartController {
     }
 
     @GetMapping(path = "")
-    public ResponseEntity<List<CartResponse>> getUserCart() {
-        var auth = SecurityContextHolder.getContext().getAuthentication();
-        var currentUser = (User)auth.getPrincipal();
-        var userCart = this.cartService.getUserCart(currentUser.getId());
-        var response = CartMapper.MAPPER.toResponse(userCart);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+    public ResponseEntity<CartSummaryResponse> getUserCart() {
+        var cartSummary = this.cartService.getCartSummary(Me().getId());
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(CartMapper.MAPPER.toResponse(cartSummary));
     }
 
     @PutMapping(path = "")
-    public ResponseEntity<?> updateCart(@RequestBody UpdateCartRequest updateCartRequest) {
-        var auth = SecurityContextHolder.getContext().getAuthentication();
-        var currentUser = (User)auth.getPrincipal();
-        this.cartService.updateCart(currentUser.getId(), updateCartRequest.productId(), updateCartRequest.quantity());
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+    public ResponseEntity updateCart(@Valid @RequestBody CartCreationRequest cartCreationRequest) {
+        this.cartService.updateCart(Me(), cartCreationRequest.productId(), cartCreationRequest.quantity());
+        return ResponseEntity.noContent().build();
     }
 
 }
