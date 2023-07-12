@@ -18,6 +18,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -65,7 +68,14 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(c -> c.disable())
-            .anonymous(a -> a.disable())
+            .cors(c -> c.configurationSource(request -> {
+                final var configuration = new CorsConfiguration();
+                configuration.addAllowedOriginPattern("*");
+                configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT"));
+                configuration.setAllowedHeaders(Arrays.asList("*"));
+                configuration.setExposedHeaders(Arrays.asList("*"));
+                return configuration;
+            }))
             .exceptionHandling(e -> e.authenticationEntryPoint((request, response, authException)
                     -> response.setStatus(HttpStatus.UNAUTHORIZED.value())))
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
