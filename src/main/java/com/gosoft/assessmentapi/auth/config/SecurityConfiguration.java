@@ -71,7 +71,7 @@ public class SecurityConfiguration {
             .cors(c -> c.configurationSource(request -> {
                 final var configuration = new CorsConfiguration();
                 configuration.addAllowedOriginPattern("*");
-                configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT"));
+                configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
                 configuration.setAllowedHeaders(Arrays.asList("*"));
                 configuration.setExposedHeaders(Arrays.asList("*"));
                 return configuration;

@@ -52,4 +52,8 @@ public class CartService {
                 .build();
         return cartSummary;
     }
+
+    public void deleteCart(UUID id) {
+        this.cartRepository.deleteById(id);
+    }
 }

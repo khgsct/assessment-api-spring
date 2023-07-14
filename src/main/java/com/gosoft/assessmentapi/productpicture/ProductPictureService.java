@@ -20,6 +20,10 @@ public class ProductPictureService {
     public ProductPicture AddProductPicture(Product product, MultipartFile file) throws IOException {
         var picture = fileService.uploadPicture(file);
         return productImageRepository.save(ProductPicture.builder()
+                .id(ProductPictureKey.builder()
+                        .productId(product.getId())
+                        .fileId(picture.getId())
+                        .build())
                 .product(product)
                 .file(picture)
                 .build());

@@ -15,11 +15,10 @@ public class FileService {
     }
 
     public File uploadPicture(MultipartFile multipartFile) throws IOException {
-        var compressdFile = FileHelper.compressImage(multipartFile.getBytes());
         var file = imageRepository.save(File.builder()
                 .name(multipartFile.getOriginalFilename())
                 .type(multipartFile.getContentType())
-                .data(compressdFile).build());
+                .data(multipartFile.getBytes()).build());
 
         return file;
     }

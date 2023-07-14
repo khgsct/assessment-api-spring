@@ -1,6 +1,7 @@
 package com.gosoft.assessmentapi.product.domain;
 
 import com.gosoft.assessmentapi.productpicture.ProductPicture;
+import com.gosoft.assessmentapi.productpicture.ProductPictureKey;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,4 +39,6 @@ public class Product {
     @Column(nullable = false)
     private String updatedBy;
 
+    @OneToMany(mappedBy = "product")
+    private Set<ProductPicture> pictures;
 }

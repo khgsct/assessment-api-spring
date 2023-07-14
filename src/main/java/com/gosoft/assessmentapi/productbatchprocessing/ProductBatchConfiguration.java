@@ -87,7 +87,7 @@ public class ProductBatchConfiguration {
 
     private void clearProducts() {
         this.jdbcTemplate
-                .update("DELETE FROM product_pictures");
+                .update("DELETE FROM product_picture");
         this.jdbcTemplate
                 .update("DELETE FROM files");
         this.jdbcTemplate

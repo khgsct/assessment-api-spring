@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Component;
@@ -26,12 +27,18 @@ public class ProductJobCompletionNotificationListener implements JobExecutionLis
 
     @Override
     public void afterJob(JobExecution jobExecution) {
+        var productPicture = new ClassPathResource("product-image.jpg");
         productRepository.findAll()
-                .forEach(p -> {
+                .forEach(product -> {
                     try {
-                        var productPicture = new ClassPathResource("product-image.webp");
-                        var output = productPictureService.AddProductPicture(p, new MockMultipartFile(productPicture.getFilename(), productPicture.getContentAsByteArray()));
+                        var file = new MockMultipartFile(
+                                productPicture.getFilename(),
+                                productPicture.getFilename(),
+                                MediaType.IMAGE_JPEG_VALUE,
+                                productPicture.getInputStream());
+                        productPictureService.AddProductPicture(product, file);
                     } catch (IOException e) {
+                        log.error(e.getMessage(), e);
                         throw new RuntimeException(e);
                     }
                 });

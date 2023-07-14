@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(path = "api/v1/carts")
 public class CartController extends BaseController {
@@ -32,4 +34,9 @@ public class CartController extends BaseController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity deleteCart(@PathVariable UUID id) {
+        this.cartService.deleteCart(id);
+        return ResponseEntity.noContent().build();
+    }
 }
