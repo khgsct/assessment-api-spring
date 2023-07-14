@@ -1,5 +1,6 @@
 package com.gosoft.assessmentapi.product.domain;
 
+import com.gosoft.assessmentapi.productpicture.ProductPicture;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -35,4 +37,5 @@ public class Product {
     private String createdBy;
     @Column(nullable = false)
     private String updatedBy;
+
 }
