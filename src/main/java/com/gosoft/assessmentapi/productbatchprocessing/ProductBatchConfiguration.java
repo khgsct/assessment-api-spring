@@ -1,7 +1,6 @@
 package com.gosoft.assessmentapi.productbatchprocessing;
 
-import com.gosoft.assessmentapi.product.Product;
-import com.gosoft.assessmentapi.product.ProductBatchItem;
+import com.gosoft.assessmentapi.product.domain.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
@@ -43,7 +42,7 @@ public class ProductBatchConfiguration {
                 .name("productItemReader")
                 .resource(new ClassPathResource("product-data.csv"))
                 .delimited()
-                .names(new String[]{"name", "price"})
+                .names(new String[]{"name", "price", "description"})
                 .fieldSetMapper(new BeanWrapperFieldSetMapper<ProductBatchItem>() {{
                     setTargetType(ProductBatchItem.class);
                 }})
@@ -54,7 +53,7 @@ public class ProductBatchConfiguration {
     public JdbcBatchItemWriter<Product> writer(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<Product>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-                .sql("INSERT INTO products (id, name, price, created_at, updated_at, created_by, updated_by) VALUES (:id, :name, :price, :createdAt, :updatedAt, :createdBy, :updatedBy)")
+                .sql("INSERT INTO products (id, name, price, description, created_at, updated_at, created_by, updated_by) VALUES (:id, :name, :price, :description, :createdAt, :updatedAt, :createdBy, :updatedBy)")
                 .dataSource(dataSource)
                 .build();
     }

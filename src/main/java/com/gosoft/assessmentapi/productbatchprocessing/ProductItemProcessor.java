@@ -1,7 +1,6 @@
 package com.gosoft.assessmentapi.productbatchprocessing;
 
-import com.gosoft.assessmentapi.product.Product;
-import com.gosoft.assessmentapi.product.ProductBatchItem;
+import com.gosoft.assessmentapi.product.domain.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
@@ -20,6 +19,7 @@ public class ProductItemProcessor implements ItemProcessor<ProductBatchItem, Pro
             product.setId(UUID.randomUUID());
             product.setName(item.getName());
             product.setPrice(item.getPrice());
+            product.setDescription(item.getDescription());
             product.setCreatedAt(LocalDateTime.now());
             product.setUpdatedAt(LocalDateTime.now());
             product.setCreatedBy("batch-processing");

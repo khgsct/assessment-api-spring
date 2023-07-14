@@ -1,9 +1,12 @@
 package com.gosoft.assessmentapi.cart;
 
-import com.gosoft.assessmentapi.product.ProductNotFoundException;
-import com.gosoft.assessmentapi.product.ProductRepository;
-import com.gosoft.assessmentapi.user.User;
-import com.gosoft.assessmentapi.user.UserRepository;
+import com.gosoft.assessmentapi.cart.contract.CartRepository;
+import com.gosoft.assessmentapi.cart.domain.Cart;
+import com.gosoft.assessmentapi.cart.domain.CartSummary;
+import com.gosoft.assessmentapi.product.common.ProductNotFoundException;
+import com.gosoft.assessmentapi.product.contract.ProductRepository;
+import com.gosoft.assessmentapi.user.domain.User;
+import com.gosoft.assessmentapi.user.contract.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

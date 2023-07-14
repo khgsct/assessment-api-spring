@@ -1,6 +1,7 @@
 package com.gosoft.assessmentapi.user;
 
 import com.gosoft.assessmentapi.auth.JwtService;
+import com.gosoft.assessmentapi.user.contract.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 

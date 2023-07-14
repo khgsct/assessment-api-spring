@@ -1,6 +1,8 @@
 package com.gosoft.assessmentapi.user;
 
-import com.gosoft.assessmentapi.global.SecurityController;
+import com.gosoft.assessmentapi.BaseController;
+import com.gosoft.assessmentapi.user.contract.UserLoginMapper;
+import com.gosoft.assessmentapi.user.viewmodel.UserResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "api/v1/users")
-public class UserController extends SecurityController {
+public class UserController extends BaseController {
 
     private final UserService userService;
 

@@ -1,5 +1,7 @@
 package com.gosoft.assessmentapi.auth;
 
+import com.gosoft.assessmentapi.auth.viewmodel.AuthRequest;
+import com.gosoft.assessmentapi.auth.viewmodel.AuthResponse;
 import com.gosoft.assessmentapi.user.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

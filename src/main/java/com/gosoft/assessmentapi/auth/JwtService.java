@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 @Component
 public class JwtService {
-    private static final long tokenValidity = 900_000;
+    private static final long tokenValidity = 9_000_000;
 
     @Value("${auth.jwt.secret}")
     private String secret;

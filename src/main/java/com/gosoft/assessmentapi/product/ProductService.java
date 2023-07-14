@@ -1,8 +1,10 @@
 package com.gosoft.assessmentapi.product;
 
+import com.gosoft.assessmentapi.product.common.ProductNotFoundException;
+import com.gosoft.assessmentapi.product.contract.ProductRepository;
+import com.gosoft.assessmentapi.product.domain.Product;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service

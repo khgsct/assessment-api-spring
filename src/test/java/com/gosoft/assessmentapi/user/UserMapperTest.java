@@ -1,5 +1,7 @@
 package com.gosoft.assessmentapi.user;
 
+import com.gosoft.assessmentapi.user.contract.UserLoginMapper;
+import com.gosoft.assessmentapi.user.domain.User;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;

@@ -1,6 +1,6 @@
 package com.gosoft.assessmentapi.productbatchprocessing;
 
-import com.gosoft.assessmentapi.product.Product;
+import com.gosoft.assessmentapi.product.domain.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.JobExecution;

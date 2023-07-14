@@ -1,6 +1,9 @@
 package com.gosoft.assessmentapi.cart;
 
-import com.gosoft.assessmentapi.global.SecurityController;
+import com.gosoft.assessmentapi.BaseController;
+import com.gosoft.assessmentapi.cart.contract.CartMapper;
+import com.gosoft.assessmentapi.cart.viewmodel.CartCreationRequest;
+import com.gosoft.assessmentapi.cart.viewmodel.CartSummaryResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "api/v1/carts")
-public class CartController extends SecurityController {
+public class CartController extends BaseController {
 
     private final CartService cartService;
 
